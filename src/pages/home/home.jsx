@@ -1,4 +1,5 @@
 import { useTypewriter, Cursor } from 'react-simple-typewriter';
+import { NavLink } from "react-router-dom";
 import './homeStyles.css';
 
 function Home() {
@@ -21,6 +22,7 @@ function Home() {
                                 <defs>
                                     <path id="c-1" d="M 50, 50m -25, 0 a 25,25 0 1,1 50,0 a 25,25 0 1,1-50,0"></path>
                                 </defs>
+                                
                                 <text fontSize="8">
                                     <textPath xlinkHref="#c-1" className='text-'>Documents Made Easy by CheckMate</textPath>
                                 </text>
@@ -34,7 +36,7 @@ function Home() {
                         </p>
                     </div>
 
-                    <button className="styled-button w-[150px] mt-[80px]">Get Started</button>
+                    <NavLink to="/signup" className="styled-button w-[150px] mt-[80px]"> Get Started </NavLink>
                 </div>
             </div>
         </>
