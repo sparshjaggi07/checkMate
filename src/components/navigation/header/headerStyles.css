@@ -1,0 +1,30 @@
+nav a {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    padding-bottom: 5px;
+    transition: color 0.3s ease-in-out;
+  }
+  
+nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 15px;
+    height: 2px;
+    background-color: #4200e7;
+    transition: width 0.3s ease-in-out;
+}
+  
+nav a:hover::after {
+    width: 100%;
+}
+  
+nav a.text-yellow-500 {
+    color: #ffffff;
+}
+  
+nav a.text-yellow-500::after {
+    width: 100%;
+}
