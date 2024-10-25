@@ -6,6 +6,7 @@ import Team from './pages/team/team'
 import About from './pages/about/about'
 import SignUp from './pages/signup/signUp'
 import SignIn from './pages/signin/signin'
+import StudentPortal from './portal/studentPortal/studentPortal'
 
 function WebRoutes() {
 	return (
@@ -19,6 +20,7 @@ function WebRoutes() {
                     <Route path="/about" element={<About />} />
                     <Route path="/signup" element={<SignUp />} />
                     <Route path="/signin" element={<SignIn />} />
+                    <Route path="/studentportal" element={<StudentPortal />} />
                 </Routes>
                 {/* <Footer /> */}
             </Router>

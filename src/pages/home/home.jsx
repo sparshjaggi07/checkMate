@@ -1,8 +1,12 @@
 import { useTypewriter, Cursor } from 'react-simple-typewriter';
 import { NavLink } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+
 import './homeStyles.css';
 
 function Home() {
+    const { loginWithRedirect } = useAuth0();
+
     const [typeEffect] = useTypewriter({
         words: ['Reliability', 'Security'],
         loop: true,
@@ -36,7 +40,7 @@ function Home() {
                         </p>
                     </div>
 
-                    <NavLink to="/signup" className="styled-button w-[150px] mt-[80px]"> Get Started </NavLink>
+                    <NavLink to="" className="styled-button w-[150px] mt-[80px]" onClick={() => loginWithRedirect()}> Get Started </NavLink>
                 </div>
             </div>
         </>
