@@ -1,0 +1,18 @@
+:root {
+    --night: #0F0D13ff;
+    --chrysler-blue: rgb(21, 3, 54);
+    --night-2: #0D0B13ff;
+    --gray: rgb(0, 7, 44);
+}
+
+.animated-gradient {
+    background: linear-gradient(45deg, var(--night), var(--chrysler-blue), var(--night-2));
+    background-size: 200% 200%;
+    animation: gradientMovement 10s ease infinite;
+}
+
+@keyframes gradientMovement {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
