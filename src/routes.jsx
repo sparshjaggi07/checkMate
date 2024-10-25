@@ -1,31 +1,34 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Header from './components/navigation/header/header'
-import Footer from './components/navigation/footer/footer'
-import Home from './pages/home/home'
-import Team from './pages/team/team'
-import About from './pages/about/about'
-import SignUp from './pages/signup/signUp'
-import SignIn from './pages/signin/signin'
-import StudentPortal from './portal/studentPortal/studentPortal'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
+
+import Home from './sections/home/home';
+import DashboardLayout from './sections/dashboard/dashboardLayout';
+import Wallet from './sections/dashboard/pages/wallet/walletSection';
+import VerificationSection from './sections/dashboard/pages/verification/verificationSection';
+import Profile from './sections/dashboard/pages/profile/profileSection';
 
 function WebRoutes() {
-	return (
-		<>
-			<Router>
-                {/* <Header /> */}
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/team" element={<Team />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/signup" element={<SignUp />} />
-                    <Route path="/signin" element={<SignIn />} />
-                    <Route path="/studentportal" element={<StudentPortal />} />
-                </Routes>
-                {/* <Footer /> */}
-            </Router>
-		</>
-	)
+    const { isAuthenticated } = useAuth0();
+
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+
+                {isAuthenticated ? (
+                    <Route path="/dashboard" element={<DashboardLayout />}>
+                        <Route path="wallet" element={<Wallet />} />
+                        <Route path="verificationSection" element={<VerificationSection />} />
+                        <Route path="profile" element={<Profile />} />
+                        <Route path="" element={<Navigate to="wallet" />} />
+                    </Route>
+                ) : (
+                    <Route path="*" element={<Navigate to="/" />} />
+                )}
+
+            </Routes>
+        </Router>
+    );
 }
 
 export default WebRoutes;

@@ -116,3 +116,32 @@
 .styled-button:hover::before {
     width: 100%; /* Expand the line on hover */
 }
+
+.logoutButton {
+    background: none; /* Transparent background */
+    border: none; /* No border */
+    color: #ffffff; /* White text */
+    font-size: 16px; /* Adjust text size */
+    font-family: albulaMedium; /* Use a clean font */
+    letter-spacing: 0.2em; /* Space out letters */
+    position: relative;
+    padding-bottom: 10px;
+    cursor: pointer;
+    text-transform: uppercase; /* Uppercase text */
+    outline: none;
+}
+
+.logoutButton::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 20px;
+    height: 3px; /* Thin colored line */
+    background-color: #e70087; /* Purple line color */
+    transition: width 0.5s ease; /* Smooth transition */
+}
+
+.logoutButton:hover::before {
+    width: 100%; /* Expand the line on hover */
+}

@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import './homeStyles.css';
 
 function Home() {
-    const { loginWithRedirect } = useAuth0();
+    const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
     const [typeEffect] = useTypewriter({
         words: ['Reliability', 'Security'],
@@ -40,7 +40,14 @@ function Home() {
                         </p>
                     </div>
 
-                    <NavLink to="" className="styled-button w-[150px] mt-[80px]" onClick={() => loginWithRedirect()}> Get Started </NavLink>
+                    {isAuthenticated ? (
+                        <div className="flex flex-row justify-center items-center gap-4 mt-[80px]">
+                            <NavLink to="/dashboard" className="styled-button w-[250px]">Jump To Dashboard</NavLink>
+                            <NavLink className="logoutButton h-[30px] w-[100px] ml-[50px]" onClick={() => logout({ returnTo: window.location.origin })}>Log Out</NavLink>
+                        </div>
+                    ) : (
+                        <NavLink className="styled-button w-[150px] mt-[80px]" onClick={() => loginWithRedirect()}> Get Started </NavLink>
+                    )}
                 </div>
             </div>
         </>
