@@ -17,21 +17,33 @@ function DashboardNavbar() {
 
                 <ul className="flex flex-col items-start space-y-6 mb-24 text-gray-400">
                     <li className="w-full">
-                        <NavLink to="/dashboard/wallet" className="flex items-center space-x-4 w-full p-5 hover:bg-gray-700 transition ease-in-out">
+                        <NavLink to="/dashboard/analysis" className="flex items-center space-x-4 w-full p-5 hover:bg-gray-700 transition ease-in-out">
                             <img src={LoginIcon} alt="Wallet Icon" className="w-7 h-7"/>
+                            <span className="text-lg">Analysis</span>
+                        </NavLink>
+                    </li>
+                    <li className="w-full">
+                        <NavLink to="/dashboard/wallet" className="flex items-center space-x-4 w-full p-5 hover:bg-gray-700 transition ease-in-out">
+                            <img src={ProfileIcon} alt="Profile Icon" className="w-7 h-7"/>
                             <span className="text-lg">Wallet</span>
                         </NavLink>
                     </li>
                     <li className="w-full">
-                        <NavLink to="/dashboard/verificationSection" className="flex items-center space-x-4 w-full p-5 hover:bg-gray-700 transition ease-in-out">
-                            <img src={ProfileIcon} alt="Profile Icon" className="w-7 h-7"/>
-                            <span className="text-lg">Verification Section</span>
+                        <NavLink to="/dashboard/connect" className="flex items-center space-x-4 w-full p-5 hover:bg-gray-700 transition ease-in-out">
+                            <img src={GearIcon} alt="Settings Icon" className="w-7 h-7"/>
+                            <span className="text-lg">Connect</span>
                         </NavLink>
                     </li>
                     <li className="w-full">
                         <NavLink to="/dashboard/profile" className="flex items-center space-x-4 w-full p-5 hover:bg-gray-700 transition ease-in-out">
                             <img src={GearIcon} alt="Settings Icon" className="w-7 h-7"/>
                             <span className="text-lg">Profile</span>
+                        </NavLink>
+                    </li>
+                    <li className="w-full">
+                        <NavLink to="/dashboard/upload" className="flex items-center space-x-4 w-full p-5 hover:bg-gray-700 transition ease-in-out">
+                            <img src={GearIcon} alt="Settings Icon" className="w-7 h-7"/>
+                            <span className="text-lg">Upload Document</span>
                         </NavLink>
                     </li>
                 </ul>

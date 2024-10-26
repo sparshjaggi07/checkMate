@@ -56,15 +56,15 @@
     background: linear-gradient(135deg, 
         #2c003e,
         #012a31,  
-        #4b0082,  
+        #2e054b,  
         #000d2b,  
-        #0d3b66,
-        #3a0058,
+        #082845,
+        #260138,
         #1a0d29,
-        #7209b7
+        #290243
     );
     z-index: -1; /* Makes sure it stays behind content */
-    background-size: 300% 300%; /* Increased size for smoother animation */
+    background-size: 500% 500%; /* Increased size for smoother animation */
     animation: gradientAnimation 15s ease infinite;
 }
 

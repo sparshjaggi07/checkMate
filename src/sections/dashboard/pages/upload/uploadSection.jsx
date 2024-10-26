@@ -6,7 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import animationData from '../../../../assets/animations/enlargingCircle_Loader.json'; // adjust path as needed
 import '../../dashboardStyles.css';
 
-const DocumentManagement = () => {
+const UploadSection = () => {
     const [file, setFile] = useState(null);
     const [docType, setDocType] = useState('');
     const [loading, setLoading] = useState(false);
@@ -137,4 +137,4 @@ const DocumentManagement = () => {
     );
 };
 
-export default DocumentManagement;
+export default UploadSection;

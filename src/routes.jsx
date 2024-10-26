@@ -4,8 +4,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Home from './sections/home/home';
 import DashboardLayout from './sections/dashboard/dashboardLayout';
 import Wallet from './sections/dashboard/pages/wallet/walletSection';
-import VerificationSection from './sections/dashboard/pages/verification/verificationSection';
 import Profile from './sections/dashboard/pages/profile/profileSection';
+import AnalysisSection from './sections/dashboard/pages/analysis/analysisSection';
+import ConnectSection from './sections/dashboard/pages/connect/connectSection';
+import UploadSection from './sections/dashboard/pages/upload/uploadSection';
 
 function WebRoutes() {
     const { isAuthenticated } = useAuth0();
@@ -18,8 +20,10 @@ function WebRoutes() {
                 {isAuthenticated ? (
                     <Route path="/dashboard" element={<DashboardLayout />}>
                         <Route path="wallet" element={<Wallet />} />
-                        <Route path="verificationSection" element={<VerificationSection />} />
                         <Route path="profile" element={<Profile />} />
+                        <Route path="analysis" element={<AnalysisSection />} />
+                        <Route path="connect" element={<ConnectSection />} />
+                        <Route path="upload" element={<UploadSection />} />
                         <Route path="" element={<Navigate to="wallet" />} />
                     </Route>
                 ) : (
