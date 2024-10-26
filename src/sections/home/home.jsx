@@ -36,7 +36,7 @@ function Home() {
                         <div className='font-albulaLight text-sm mt-[40px] uppercase tracking-[7px]'>Streamlining Document Verification Process with Unmatched Efficiency</div>
 
                         <p className='mt-[25px] tracking-[3px]'>
-                            Empowering You to Verify Your Documents wit <span className='text-[#4200e7]'>{typeEffect}</span>
+                            Empowering You to Verify Your Documents with <span className='text-[#4200e7]'>{typeEffect}</span>
                         </p>
                     </div>
 
