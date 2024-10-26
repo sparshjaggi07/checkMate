@@ -63,42 +63,41 @@
         #1a0d29,
         #290243
     );
-    z-index: -1; /* Makes sure it stays behind content */
-    background-size: 500% 500%; /* Increased size for smoother animation */
+    z-index: -1;
+    background-size: 500% 500%;
     animation: gradientAnimation 15s ease infinite;
 }
 
-/* Keyframes for wavy gradient animation */
+
 @keyframes gradientAnimation {
     0% {
         background-position: 0% 50%;
     }
     25% {
-        background-position: 50% 0%; /* Moves diagonally upward */
+        background-position: 50% 0%;
     }
     50% {
-        background-position: 100% 50%; /* Moves to the right */
+        background-position: 100% 50%;
     }
     75% {
-        background-position: 50% 100%; /* Moves diagonally downward */
+        background-position: 50% 100%;
     }
     100% {
-        background-position: 0% 50%; /* Returns to the start */
+        background-position: 0% 50%;
     }
 }
 
-/* Styled button */
 .styled-button {
-    background: none; /* Transparent background */
-    border: none; /* No border */
-    color: #ffffff; /* White text */
-    font-size: 16px; /* Adjust text size */
-    font-family: albulaMedium; /* Use a clean font */
-    letter-spacing: 0.2em; /* Space out letters */
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: albulaMedium;
+    letter-spacing: 0.2em;
     position: relative;
     padding-bottom: 10px;
     cursor: pointer;
-    text-transform: uppercase; /* Uppercase text */
+    text-transform: uppercase;
     outline: none;
 }
 
@@ -108,26 +107,26 @@
     bottom: 0;
     left: 0;
     width: 20px;
-    height: 3px; /* Thin colored line */
-    background-color: #4200e7; /* Purple line color */
-    transition: width 0.5s ease; /* Smooth transition */
+    height: 3px;
+    background-color: #4200e7;
+    transition: width 0.5s ease;
 }
 
 .styled-button:hover::before {
-    width: 100%; /* Expand the line on hover */
+    width: 100%;
 }
 
 .logoutButton {
-    background: none; /* Transparent background */
-    border: none; /* No border */
-    color: #ffffff; /* White text */
-    font-size: 16px; /* Adjust text size */
-    font-family: albulaMedium; /* Use a clean font */
-    letter-spacing: 0.2em; /* Space out letters */
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: albulaMedium;
+    letter-spacing: 0.2em;
     position: relative;
     padding-bottom: 10px;
     cursor: pointer;
-    text-transform: uppercase; /* Uppercase text */
+    text-transform: uppercase;
     outline: none;
 }
 
@@ -137,11 +136,11 @@
     bottom: 0;
     left: 0;
     width: 20px;
-    height: 3px; /* Thin colored line */
-    background-color: #e70087; /* Purple line color */
-    transition: width 0.5s ease; /* Smooth transition */
+    height: 3px;
+    background-color: #e70087;
+    transition: width 0.5s ease;
 }
 
 .logoutButton:hover::before {
-    width: 100%; /* Expand the line on hover */
+    width: 100%;
 }

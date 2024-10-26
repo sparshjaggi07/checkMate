@@ -5,11 +5,11 @@
     --gray: rgb(0, 7, 44);
 }
 
-.animated-gradient {
+/* .animated-gradient {
     background: linear-gradient(45deg, var(--night), var(--chrysler-blue), var(--night-2));
     background-size: 200% 200%;
     animation: gradientMovement 10s ease infinite;
-}
+} */
 
 @keyframes gradientMovement {
     0% { background-position: 0% 50%; }
@@ -17,18 +17,21 @@
     100% { background-position: 0% 50%; }
 }
 
-@keyframes subtleGreenGradient {
+
+@keyframes gradient {
     0% {
-        background-color: #e0f7e9; /* Light green */
+        background-color: #b2fab4; /* Light green */
     }
     50% {
-        background-color: #c8e6c9; /* Slightly darker green */
+        background-color: #e0f7fa; /* Light cyan */
     }
     100% {
-        background-color: #e0f7e9; /* Light green */
+        background-color: #e0f7fa; /* Light cyan */
     }
 }
 
-.animated-background {
-    animation: subtleGreenGradient 10s ease-in-out infinite;
+.animated-gradient {
+    animation: gradient 8s ease infinite; /* Change duration as needed */
+    background: linear-gradient(270deg, #e0f7fa, #b2fab4, #e0f7fa); /* Gradient background */
+    background-size: 400% 400%; /* This allows for the animation effect */
 }
