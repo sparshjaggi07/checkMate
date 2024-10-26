@@ -5,7 +5,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 function AnalysisSection() {
     const { user } = useAuth0();
-
     const [showActions, setShowActions] = useState(Array(4).fill(false));
 
     const documents = [
@@ -14,6 +13,10 @@ function AnalysisSection() {
         { type: 'Admit Card', uploadDate: '30 Aug 2023 11:45 AM', verificationDate: '31 Aug 2023 10:00 AM', status: 'Verified', hash: 'https://via.placeholder.com/100' },
         { type: 'Other Document', uploadDate: '29 Aug 2023 01:20 PM', verificationDate: '30 Aug 2023 02:30 PM', status: 'Verified', hash: 'https://via.placeholder.com/100' },
     ];
+
+    const verifiedCount = documents.filter(doc => doc.status === 'Verified').length;
+    const unverifiedCount = documents.filter(doc => doc.status === 'Pending').length;
+    const verificationRatio = (verifiedCount / (verifiedCount + unverifiedCount) * 100).toFixed(2);
 
     const toggleActions = (index) => {
         const updatedShowActions = [...showActions];
@@ -28,6 +31,22 @@ function AnalysisSection() {
                 <NavLink to="/dashboard/profile" id='md_imgHolder'>
                     <img src={user.picture} alt="User Icon" className='md_userIcon rounded-full h-[70%] w-[70%]'/>
                 </NavLink>
+            </div>
+
+            {/* Top Menu Cards */}
+            <div className="w-full grid grid-cols-3 gap-4 p-4">
+                <div className="bg-white shadow-lg rounded-lg p-4 text-center">
+                    <h3 className="text-lg font-bold text-gray-600">Verified Documents</h3>
+                    <p className="text-2xl font-bold text-blue-500">{verifiedCount}</p>
+                </div>
+                <div className="bg-white shadow-lg rounded-lg p-4 text-center">
+                    <h3 className="text-lg font-bold text-gray-600">Unverified Documents</h3>
+                    <p className="text-2xl font-bold text-yellow-500">{unverifiedCount}</p>
+                </div>
+                <div className="bg-white shadow-lg rounded-lg p-4 text-center">
+                    <h3 className="text-lg font-bold text-gray-600">Verification Ratio</h3>
+                    <p className="text-2xl font-bold text-purple-500">{verificationRatio}%</p>
+                </div>
             </div>
 
             <main className="flex flex-col items-center w-full p-8 font-albulaMedium">
@@ -68,7 +87,7 @@ function AnalysisSection() {
                                                 </div>
                                             ) : (
                                                 <button
-                                                    className="inline-flex items-center justify-center w-24 h-8 px-3 py-1 rounded-full text-sm transition duration-300 ease-in-out transform hover:scale-105 bg-purple-600 text-white"
+                                                    className="inline-flex items-center justify-center w-20 h-8 px-3 py-1 rounded-full text-sm transition duration-300 ease-in-out transform hover:scale-105 bg-purple-600 text-white"
                                                     onClick={() => toggleActions(index)}
                                                 >
                                                     Action

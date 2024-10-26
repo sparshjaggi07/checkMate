@@ -54,9 +54,9 @@ function Profile() {
                         <h3 className="text-2xl font-bold text-white">{user.name}</h3>
                         <p className="text-gray-300 mb-4">{user.email}</p>
                         <div className="text-center w-full">
-                            <p className="text-gray-300 my-1">Document Uploads: <span className="font-semibold text-orange-400">32</span></p>
-                            <p className="text-gray-300 my-1">Document Verified: <span className="font-semibold text-green-400">26</span></p>
-                            <p className="text-gray-300 my-1">Document Unverified <span className="font-semibold text-blue-400">6</span></p>
+                            <p className="text-gray-300 my-1">Document Uploads: <span className="font-semibold text-orange-400">4</span></p>
+                            <p className="text-gray-300 my-1">Document Verified: <span className="font-semibold text-green-400">3</span></p>
+                            <p className="text-gray-300 my-1">Document Unverified <span className="font-semibold text-blue-400">1</span></p>
                         </div>
                     </div>
                     
