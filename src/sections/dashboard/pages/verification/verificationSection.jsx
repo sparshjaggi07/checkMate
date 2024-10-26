@@ -43,17 +43,24 @@ const DocumentManagement = () => {
         try {
             const formData = new FormData();
             formData.append('file', file);
-                    
+    
             const url = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
             const headers = {
                 pinata_api_key: '04b26ee360171f03ae2b',
                 pinata_secret_api_key: '250fe3ce90862d18f94ced6c065a6bec5a956d528aef8ab9d737a9b3f0ca8065',
                 "Content-Type": "multipart/form-data",
             };
-            
+    
             const response = await axios.post(url, formData, { headers });
             const hash = response.data.IpfsHash;
             setIpfsHash(hash);
+    
+            // Store hash in MongoDB along with userID and docType
+            await axios.post('http://localhost:5000/api/storeDocument', {
+                userID,
+                docType,
+                ipfsHash: hash,
+            });
         } catch (error) {
             console.error("Error uploading document to Pinata:", error.response ? error.response.data : error.message);
             alert('Failed to store document in IPFS.');
@@ -61,6 +68,7 @@ const DocumentManagement = () => {
             setLoading(false);
         }
     };
+    
 
     const defaultOptions = {
         loop: true,
