@@ -22,22 +22,22 @@ function AnalysisSection() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-start w-full min-h-screen animated-gradient">
-            <div id='walletNavbar' className='bg-[#19161f] bg-opacity-50 backdrop-blur-xl border border-[#ffffff1a] w-full h-[100px] flex flex-row justify-between items-center font-albulaRegular text-white p-10'>
-                <span className='text-3xl'>Welcome {user.given_name} {user.family_name}</span>
+        <div className="flex flex-col items-center justify-start w-full min-h-screen animated-background">
+            <div id='walletNavbar' className='bg-slate-900 w-full h-[100px] flex flex-row justify-between items-center font-albulaRegular text-gray-800 p-10'>
+                <span className='text-3xl font-albulaBold text-white'>Welcome {user.given_name} {user.family_name}</span>
                 <NavLink to="/dashboard/profile" id='md_imgHolder'>
                     <img src={user.picture} alt="User Icon" className='md_userIcon rounded-full h-[70%] w-[70%]'/>
                 </NavLink>
             </div>
 
             <main className="flex flex-col items-center w-full p-8 font-albulaMedium">
-                <div className="bg-[#ffffff1a] backdrop-blur-lg border border-[#ffffff1a] rounded-lg p-6 text-white w-full">
+                <div className="bg-gray-100 backdrop-blur-lg border border-gray-300 rounded-lg p-6 text-gray-800 w-full">
                     <h2 className="text-xl font-bold">Document Verification</h2>
-                    <p className="text-gray-400">Uploaded Documents</p>
+                    <p className="text-gray-600">Uploaded Documents</p>
                     <div className="overflow-x-auto mt-4">
                         <table className="min-w-full text-left text-sm">
                             <thead>
-                                <tr className="border-b border-gray-700 text-gray-400">
+                                <tr className="border-b border-gray-300 text-gray-600">
                                     <th className="py-2 px-4">Document Type</th>
                                     <th className="py-2 px-4">Upload Date</th>
                                     <th className="py-2 px-4">Verification Date</th>
@@ -47,13 +47,13 @@ function AnalysisSection() {
                             </thead>
                             <tbody>
                                 {documents.map((document, index) => (
-                                    <tr key={index} className="border-b border-gray-700 transition duration-300 ease-in-out hover:bg-[#ffffff0a] border rounded-lg">
-                                        <td className="py-3 px-4 text-gray-300">{document.type}</td>
-                                        <td className="py-3 px-4 text-gray-300">{document.uploadDate}</td>
-                                        <td className="py-3 px-4 text-gray-300">{document.verificationDate}</td>
+                                    <tr key={index} className="border-b border-gray-300 transition duration-300 ease-in-out hover:bg-gray-200">
+                                        <td className="py-3 px-4 text-gray-700">{document.type}</td>
+                                        <td className="py-3 px-4 text-gray-700">{document.uploadDate}</td>
+                                        <td className="py-3 px-4 text-gray-700">{document.verificationDate}</td>
                                         <td className="py-3 px-4">
                                             <span className={`inline-flex items-center justify-center w-24 h-8 px-3 py-1 rounded-full text-sm ${
-                                                document.status === 'Verified' ? 'bg-green-600 text-white' : 'bg-yellow-600 text-white'
+                                                document.status === 'Verified' ? 'bg-green-500 text-white' : 'bg-yellow-500 text-white'
                                             }`}>
                                                 {document.status}
                                             </span>
@@ -61,9 +61,9 @@ function AnalysisSection() {
                                         <td className="py-3 px-4">
                                             {showActions[index] ? (
                                                 <div className="flex space-x-2 opacity-100 transition-opacity duration-500 ease-out">
-                                                    <a href={document.hash} target="_blank" rel="noopener noreferrer" className="text-blue-400">View</a>
+                                                    <a href={document.hash} target="_blank" rel="noopener noreferrer" className="text-blue-600">View</a>
                                                     {document.status === 'Pending' && (
-                                                        <button className="text-blue-400" onClick={() => alert('Connect functionality here')}>Connect</button>
+                                                        <button className="text-blue-600" onClick={() => alert('Connect functionality here')}>Connect</button>
                                                     )}
                                                 </div>
                                             ) : (

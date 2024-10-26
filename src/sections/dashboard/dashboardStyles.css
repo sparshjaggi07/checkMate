@@ -16,3 +16,19 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+
+@keyframes subtleGreenGradient {
+    0% {
+        background-color: #e0f7e9; /* Light green */
+    }
+    50% {
+        background-color: #c8e6c9; /* Slightly darker green */
+    }
+    100% {
+        background-color: #e0f7e9; /* Light green */
+    }
+}
+
+.animated-background {
+    animation: subtleGreenGradient 10s ease-in-out infinite;
+}
