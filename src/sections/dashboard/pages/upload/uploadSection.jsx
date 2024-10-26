@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Lottie from 'react-lottie';
 import { useAuth0 } from '@auth0/auth0-react';
 
-import animationData from '../../../../assets/animations/enlargingCircle_Loader.json'; // adjust path as needed
+import animationData from '../../../../assets/animations/enlargingCircle_Loader.json';
 import '../../dashboardStyles.css';
 
 const UploadSection = () => {
@@ -11,9 +11,9 @@ const UploadSection = () => {
     const [docType, setDocType] = useState('');
     const [loading, setLoading] = useState(false);
     const [ipfsHash, setIpfsHash] = useState(null);
-    
-    const { user } = useAuth0();
+    const [documents, setDocuments] = useState([]);
 
+    const { user } = useAuth0();
     const userID = user.sub;
 
     const handleFileChange = (e) => {
@@ -43,23 +43,23 @@ const UploadSection = () => {
         try {
             const formData = new FormData();
             formData.append('file', file);
-    
+        
             const url = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
             const headers = {
                 pinata_api_key: '04b26ee360171f03ae2b',
                 pinata_secret_api_key: '250fe3ce90862d18f94ced6c065a6bec5a956d528aef8ab9d737a9b3f0ca8065',
                 "Content-Type": "multipart/form-data",
             };
-    
+        
             const response = await axios.post(url, formData, { headers });
             const hash = response.data.IpfsHash;
             setIpfsHash(hash);
-    
+        
             // Store hash in MongoDB along with userID and docType
             await axios.post('http://localhost:5000/api/storeDocument', {
                 userID,
-                docType,
-                ipfsHash: hash,
+                type: docType,  // Change from docType to type
+                hash,           // Change from ipfsHash to hash
             });
         } catch (error) {
             console.error("Error uploading document to Pinata:", error.response ? error.response.data : error.message);
