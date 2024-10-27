@@ -16,7 +16,15 @@ export default {
 				'albulaHeavy': ['"albulaHeavy"', 'heavy'],
 				'albulaExtraBold': ['"albulaExtraBold"', 'extraBold'],
 		  	},
+			backdropBlur: {
+                md: '12px',
+            },
 		},
 	},
+	variants: {
+        extend: {
+            backdropBlur: ['responsive'],
+        },
+    },
 	plugins: [],
 }

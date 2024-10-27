@@ -3,8 +3,13 @@ import axios from 'axios';
 import Lottie from 'react-lottie';
 import { useAuth0 } from '@auth0/auth0-react';
 
+import chimeSound from '../../../../assets/sound/chime.mp3';
+import errorSound from '../../../../assets/sound/error.mp3'
 import animationData from '../../../../assets/animations/enlargingCircle_Loader.json';
+import tickAnimation from '../../../../assets/animations/tickAnimation.json';
+import errorAnimation from '../../../../assets/animations/Error_Animation.json';
 import '../../dashboardStyles.css';
+import { NavLink,useNavigate } from 'react-router-dom';
 
 const UploadSection = () => {
     const [file, setFile] = useState(null);
@@ -12,9 +17,17 @@ const UploadSection = () => {
     const [loading, setLoading] = useState(false);
     const [ipfsHash, setIpfsHash] = useState(null);
     const [documents, setDocuments] = useState([]);
+    const [verifyStatus, setVerifyStatus] = useState(false);
+    const navigate=useNavigate();
+
+    const [newHash, setNewHash] = useState(null);
+    const [error, setError] = useState(false);
+
 
     const { user } = useAuth0();
     const userID = user.sub;
+
+    let verifiedHash;
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -24,6 +37,8 @@ const UploadSection = () => {
         setFile(null);
         setDocType('');
         setIpfsHash(null);
+        setVerifyStatus(false);
+        setError(false);
     };
 
     const handleTypeChange = (e) => {
@@ -54,19 +69,105 @@ const UploadSection = () => {
             const response = await axios.post(url, formData, { headers });
             const hash = response.data.IpfsHash;
             setIpfsHash(hash);
+            
         
-            await axios.post('http://localhost:5000/api/storeDocument', {
-                userID,
-                type: docType,
-                hash,
-            });
+        // Prepare data to send to your backend
+        const backendData = JSON.stringify({
+            ipfs_link: hash
+        });
+
+        const config = {
+            method: 'post',
+            url: 'http://127.0.0.1:5000/c',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: backendData
+        };
+
+        // Send IPFS hash and document type to backend
+        const backendResponse = await axios.request(config);
+        const backendResponseData = backendResponse.data;
+
+        console.log(JSON.stringify(backendResponseData));
+        console.log(backendResponseData);
+        console.log(docType);
+
+        if(backendResponseData["predicted_document_type"] == docType){
+            console.log("classification completed");
+
+            // Call to the second backend route if classification is successful
+            const secondConfig = {
+                method: 'post',
+                maxBodyLength: Infinity,
+                url: 'http://127.0.0.1:5000/p',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify({ ipfs_link: hash })
+            };
+
+            const secondResponse = await axios.request(secondConfig);
+            const secondResponseData = secondResponse.data;
+            console.log(JSON.stringify(secondResponseData));
+
+            if(secondResponseData["Match Result"]==1){
+                console.log("dataset matched");
+
+                // Additional request if dataset matched
+                let additionalData = JSON.stringify({
+                    "ipfs_link": hash // Use the same IPFS hash
+                });
+
+                let additionalConfig = {
+                    method: 'post',
+                    maxBodyLength: Infinity,
+                    url: 'http://127.0.0.1:5000/o',
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    },
+                    data: additionalData
+                };
+
+                // Send additional request using await
+                const additionalResponse = await axios.request(additionalConfig);
+                const verifiedHash = additionalResponse.data;
+                setNewHash(verifiedHash.ipfs_hash);
+
+                console.log(verifiedHash);
+                setLoading(false);
+                setVerifyStatus(true);
+                playChimeSound();
+            } else {
+                console.log("datasetmatchingfailed");
+                setError(true);
+                playErrorSound();
+            }
+
+        } else {
+            console.log("classificationfailed");
+            setError(true);
+            playErrorSound();
+        }
+
+        
         } catch (error) {
             console.error("Error uploading document to Pinata:", error.response ? error.response.data : error.message);
+            alert('Failed to store document in IPFS.');
         } finally {
             setLoading(false);
         }
     };
-    
+
+    const playChimeSound = () => {
+        const audio = new Audio(chimeSound);
+        audio.play();
+    };
+
+    const playErrorSound = () => {
+        const audio = new Audio(errorSound);
+        audio.play();
+    };
 
     const defaultOptions = {
         loop: true,
@@ -78,60 +179,87 @@ const UploadSection = () => {
     };
     
     return (
-        <div className="flex flex-col items-center justify-center w-full min-h-screen bg-green-100">
-            <div className="max-w-xl w-full bg-gray-100 backdrop-blur-md shadow-lg rounded-lg p-8">
-                <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Document Upload</h1>
+        <>
+            <div className="flex flex-col items-center justify-center w-full min-h-screen animated-gradient">
+                <div className="w-[600px] bg-gray-800 bg-opacity-40 backdrop-blur-md shadow-lg rounded-lg glass-card p-12">
+                    <h1 className="text-3xl font-bold text-white mb-6 text-center font-albulaMedium">Document Upload</h1>
 
-                <div className="border-2 border-dashed border-gray-400 rounded-lg p-6 bg-gray-300 bg-opacity-30 mb-6">
-                    {!file ? (
-                        <div className="flex flex-col items-center justify-center cursor-pointer">
-                            <label htmlFor="file-upload" className="cursor-pointer">
-                                <div className="flex flex-col items-center justify-center">
-                                    <svg className="w-12 h-12 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 01-4 4h16a4 4 0 004-4V8a4 4 0 00-4-4H7m7 12l5-5m0 0l-5-5m5 5H8" />
+                    <div className="border-2 border-dashed border-gray-500 rounded-lg p-6 bg-gray-700 bg-opacity-30 mb-6">
+                        {!file ? (
+                            <div className="flex flex-col items-center justify-center cursor-pointer h-full">
+                                <label htmlFor="file-upload" className="cursor-pointer">
+                                    <div className="flex flex-col items-center justify-center">
+                                        <svg className="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 15a4 4 0 01-4 4h16a4 4 0 004-4V8a4 4 0 00-4-4H7m7 12l5-5m0 0l-5-5m5 5H8" />
+                                        </svg>
+                                        <p className="mt-2 text-gray-300">Click to Upload File</p>
+                                    </div>
+                                    <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} />
+                                </label>
+                            </div>
+                        ) : (
+                            <div className="flex items-center justify-between">
+                                <p className="text-sm text-gray-300">{file.name}</p>
+                                <button className="p-2 text-gray-400 bg-gray-600 bg-opacity-30 rounded-full hover:bg-gray-700" onClick={handleRemoveFile} >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
-                                    <p className="mt-2 text-gray-700">Click to Upload File</p>
-                                </div>
-                                <input id="file-upload" type="file" className="hidden" onChange={handleFileChange} />
-                            </label>
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                    <select value={docType} onChange={handleTypeChange} className="block w-full p-3 mb-6 border border-gray-500 rounded-md bg-gray-600 text-white focus:ring focus:ring-purple-500" disabled={!file}>
+                        <option value="">Select Document Type</option>
+                        <option value="aadhar">Aadhar Card</option>
+                        <option value="admit">Admit Card</option>
+                        <option value="pan">PAN Card</option>
+                        <option value="pan">Result</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <button onClick={handleUpload} className="w-full bg-purple-700 text-white py-3 rounded-md hover:bg-purple-800 transition-colors" disabled={!file || !docType} >
+                        Next
+                    </button>
+
+                    {loading ? (
+                        <div className="mt-6 flex justify-center">
+                            <Lottie options={defaultOptions} height={150} width={150} />
                         </div>
-                    ) : (
-                        <div className="flex items-center justify-between">
-                            <p className="text-sm text-gray-700">{file.name}</p>
-                            <button className="p-2 text-gray-600 bg-gray-400 bg-opacity-30 rounded-full hover:bg-gray-500" onClick={handleRemoveFile}>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
+                    ) : error ? (
+                        <div className="mt-6 flex justify-center">
+                            <Lottie options={{
+                                loop: false,
+                                autoplay: true,
+                                animationData: errorAnimation,
+                                rendererSettings: {
+                                    preserveAspectRatio: 'xMidYMid slice'
+                                }
+                            }} height={150} width={150} />
+                        </div>
+                    ) : verifyStatus ? (
+                        <div className="mt-6 flex justify-center">
+                            <Lottie options={{
+                                loop: false,
+                                autoplay: true,
+                                animationData: tickAnimation,
+                                rendererSettings: {
+                                    preserveAspectRatio: 'xMidYMid slice'
+                                }
+                            }} height={150} width={150} />
+                        </div>
+                    ) : null}
+
+                    {error && alert("Document is flagged!")}
+
+                    {newHash && (
+                        <div className="mt-6 p-4 bg-gray-700 bg-opacity-40 rounded-lg flex justify-center">
+                            <a href={`https://ipfs.io/ipfs/${newHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Link to IPFS</a>
                         </div>
                     )}
                 </div>
-
-                <select value={docType} onChange={handleTypeChange} className="block w-full p-3 mb-6 border border-gray-400 rounded-md bg-gray-500 text-gray-200 focus:ring focus:ring-purple-500" disabled={!file}>
-                    <option value="">Select Document Type</option>
-                    <option value="aadhar">Aadhar Card</option>
-                    <option value="admit">Admit Card</option>
-                    <option value="pan">PAN Card</option>
-                    <option value="other">Other</option>
-                </select>
-
-                <button onClick={handleUpload} className="w-full bg-purple-600 text-white py-3 rounded-md hover:bg-purple-700 transition-colors" disabled={!file || !docType}>
-                    Next
-                </button>
-
-                {loading && (
-                    <div className="mt-6 flex justify-center">
-                        <Lottie options={defaultOptions} height={150} width={150} />
-                    </div>
-                )}
-
-                {ipfsHash && (
-                    <div className="mt-6 p-4 bg-gray-300 bg-opacity-40 rounded-lg flex justify-center">
-                        <a href={`https://ipfs.io/ipfs/${ipfsHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{ipfsHash}</a>
-                    </div>
-                )}
             </div>
-        </div>
+        </>
     );
 };
 

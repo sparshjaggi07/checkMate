@@ -3,13 +3,55 @@
     --chrysler-blue: rgb(21, 3, 54);
     --night-2: #0D0B13ff;
     --gray: rgb(0, 7, 44);
+
+
+    --pear: #DFF25Cff;
+    --beaver: #B1856Aff;
+    --moss-green: #81864Bff;
+    --platinum: #E0E0DCff;
+    --black-olive: #4B4C44ff;
 }
 
-/* .animated-gradient {
+.dark-gradient-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, 
+        #2c003e,
+        #002025,  
+        #200435,  
+        #000d2b,  
+        #061e35,
+        #260138,
+        #1a0d29,
+        #290243
+    );
+    z-index: -1;
+    background-size: 600% 600%;
+    animation: gradientAnimation 15s ease infinite;
+}
+
+.glassmorphism-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.glassmorphism-card:hover {
+    transform: scale(1.05);
+}
+
+
+.animated-gradient {
     background: linear-gradient(45deg, var(--night), var(--chrysler-blue), var(--night-2));
     background-size: 200% 200%;
     animation: gradientMovement 10s ease infinite;
-} */
+}
 
 @keyframes gradientMovement {
     0% { background-position: 0% 50%; }
@@ -17,21 +59,6 @@
     100% { background-position: 0% 50%; }
 }
 
-
-@keyframes gradient {
-    0% {
-        background-color: #b2fab4; /* Light green */
-    }
-    50% {
-        background-color: #e0f7fa; /* Light cyan */
-    }
-    100% {
-        background-color: #e0f7fa; /* Light cyan */
-    }
-}
-
-.animated-gradient {
-    animation: gradient 8s ease infinite; /* Change duration as needed */
-    background: linear-gradient(270deg, #e0f7fa, #b2fab4, #e0f7fa); /* Gradient background */
-    background-size: 400% 400%; /* This allows for the animation effect */
+.animated-background {
+    animation: subtleGreenGradient 10s ease-in-out infinite;
 }
