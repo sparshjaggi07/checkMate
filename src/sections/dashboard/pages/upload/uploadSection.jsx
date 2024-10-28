@@ -9,7 +9,7 @@ import animationData from '../../../../assets/animations/enlargingCircle_Loader.
 import tickAnimation from '../../../../assets/animations/tickAnimation.json';
 import errorAnimation from '../../../../assets/animations/Error_Animation.json';
 import '../../dashboardStyles.css';
-import { NavLink,useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const UploadSection = () => {
     const [file, setFile] = useState(null);
@@ -255,7 +255,7 @@ const UploadSection = () => {
 
                     {newHash && (
                         <div className="mt-6 p-4 bg-gray-700 bg-opacity-40 rounded-lg flex justify-center">
-                            <a href={` https://gateway.pinata.cloud/ipfs/${newHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Link to IPFS</a>
+                            <a href={`https://gateway.pinata.cloud/ipfs/${newHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Link to IPFS</a>
                         </div>
                     )}
                 </div>
