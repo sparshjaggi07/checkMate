@@ -1,33 +1,57 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../../dashboardStyles.css';
 import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
 function AnalysisSection() {
     const { user } = useAuth0();
     const [showActions, setShowActions] = useState(Array(4).fill(false));
+    const [documents, setDocuments] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    
+    const verifiedCount = documents.filter(doc => doc.verify_flag).length;
+    const unverifiedCount = documents.length - verifiedCount;
+    const verificationRatio = unverifiedCount + verifiedCount > 0 
+        ? (verifiedCount / (verifiedCount + unverifiedCount) * 100).toFixed(2) 
+        : 0;
+    
+    useEffect(() => {
+        const fetchDocuments = async () => {
+            if (!user?.sub) {
+                setError('User ID is not available.');
+                setLoading(false);
+                return;
+            }
 
-    const documents = [
-        { type: 'Aadhaar Card', uploadDate: '25 Oct 2024 10:30 AM', verificationDate: '25 Oct 2024 12:15 PM', status: 'Verified', hash: 'https://via.placeholder.com/100' },
-        { type: 'PAN Card', uploadDate: '13 Oct 2024 09:00 AM', verificationDate: 'Pending', status: 'Pending', hash: 'https://via.placeholder.com/100' },
-        { type: 'Admit Card', uploadDate: '5 Oct 2024 11:45 AM', verificationDate: '5 Oct 2024 10:00 AM', status: 'Verified', hash: 'https://via.placeholder.com/100' },
-        { type: 'Other Document', uploadDate: '29 Sept 2024 01:20 PM', verificationDate: '29 Sept 2024 02:30 PM', status: 'Verified', hash: 'https://via.placeholder.com/100' },
-    ];
+            try {
+                const response = await axios.get(`http://127.0.0.1:5000/c/${user.sub}`);
+                console.log("Response Data:", response.data);
+                setDocuments(response.data);
+            } catch (err) {
+                console.error("Error fetching documents:", err);
+                setError('Failed to fetch documents: ' + err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    const verifiedCount = documents.filter(doc => doc.status === 'Verified').length;
-    const unverifiedCount = documents.filter(doc => doc.status === 'Pending').length;
-    const verificationRatio = (verifiedCount / (verifiedCount + unverifiedCount) * 100).toFixed(2);
+        fetchDocuments();
+    }, [user.sub]);
 
     const toggleActions = (index) => {
         const updatedShowActions = [...showActions];
         updatedShowActions[index] = !updatedShowActions[index];
         setShowActions(updatedShowActions);
     };
+    
+    if (loading) return <p>Loading documents...</p>;
+    if (error) return <p>{error}</p>;
 
     return (
         <div className="flex flex-col items-center justify-start w-full min-h-screen">
             <div className="dark-gradient-background"></div>
-
             <div id='walletNavbar' className='w-full h-[100px] flex flex-row justify-between items-center font-albulaRegular backdrop-blur-md bg-slate-900 rounded-lg shadow-lg p-10'>
                 <span className='text-3xl font-albulaBold text-white'>Welcome {user.given_name} {user.family_name}</span>
                 <NavLink to="/dashboard/profile" id='md_imgHolder'>
@@ -60,45 +84,32 @@ function AnalysisSection() {
                     </div>
                     <p className="text-gray-100 mb-4">Uploaded Documents</p>
 
-                    <div className="grid grid-cols-5 gap-4 px-10 py-4 font-semibold text-white">
+                    <div className="grid grid-cols-4 gap-4 px-10 py-4 font-semibold text-white">
                         <div>Document Type</div>
                         <div>Upload Date</div>
-                        <div>Verification Date</div>
                         <div>Status</div>
                         <div className="text-right">Actions</div>
                     </div>
 
                     <div className="space-y-2 mt-2">
                         {documents.map((document, index) => (
-                            <div key={index} className="grid grid-cols-5 gap-4 items-center px-10 py-4 rounded-full shadow-lg border border-gray-200 bg-gray-800 bg-opacity-40 backdrop-blur-md hover:bg-opacity-50 transition duration-300 ease-in-out">
+                            <div key={index} className="grid grid-cols-4 gap-4 items-center px-10 py-4 rounded-full shadow-lg border border-gray-200 bg-gray-800 bg-opacity-40 backdrop-blur-md hover:bg-opacity-50 transition duration-300 ease-in-out">
                                 <div className="flex items-center space-x-3">
-                                    <span className="text-gray-200 font-medium">{document.type}</span>
+                                    <span className="text-gray-200 font-medium">{document.doctype}</span>
                                 </div>
-                                <div className="text-gray-300">{document.uploadDate}</div>
-                                <div className="text-gray-300">{document.verificationDate}</div>
+                                <div className="text-gray-300">{new Date(document.upload_time).toLocaleString()}</div>
                                 <div>
                                     <span className={`inline-flex items-center justify-center w-24 h-8 px-3 py-1 rounded-full text-sm font-semibold ${
-                                        document.status === 'Verified' ? 'bg-green-400 text-white' : 'bg-yellow-500 text-white'
+                                        document.verify_flag ? 'bg-green-400 text-white' : 'bg-yellow-500 text-white'
                                     }`}>
-                                        {document.status}
+                                        {document.verify_flag ? 'Verified' : 'Pending'}
                                     </span>
                                 </div>
                                 <div className="text-right">
-                                    {showActions[index] ? (
-                                        <div className="flex space-x-2 opacity-100 transition-opacity duration-500 ease-out">
-                                            <a href={document.hash} target="_blank" rel="noopener noreferrer" className="text-blue-600">View</a>
-                                            {document.status === 'Pending' && (
-                                                <button className="text-blue-600" onClick={() => alert('Connect functionality here')}>Connect</button>
-                                            )}
-                                        </div>
-                                    ) : (
-                                        <button
-                                            className="inline-flex items-center justify-center w-20 h-8 px-3 py-1 rounded-full text-sm transition duration-300 ease-in-out transform hover:scale-105 bg-purple-600 text-white"
-                                            onClick={() => toggleActions(index)}
-                                        >
-                                            Action
-                                        </button>
-                                    )}
+                                    
+                                <a href={`https://gateway.pinata.cloud/ipfs/${document.ipfs_hash}`} className="inline-flex items-center justify-center w-20 h-8 px-3 py-1 rounded-full text-sm transition duration-300 ease-in-out transform hover:scale-105 bg-purple-600 text-white" onClick={() => toggleActions(index)} >
+                                    View
+                                </a>
                                 </div>
                             </div>
                         ))}

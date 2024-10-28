@@ -78,12 +78,13 @@ const UploadSection = () => {
 
         const config = {
             method: 'post',
-            url: 'http://127.0.0.1:5000/c',
+            url: `http://127.0.0.1:5000/c/${user.sub}`,
             headers: {
                 'Content-Type': 'application/json'
             },
             data: backendData
         };
+        
 
         // Send IPFS hash and document type to backend
         const backendResponse = await axios.request(config);
@@ -214,7 +215,7 @@ const UploadSection = () => {
                         <option value="aadhar">Aadhar Card</option>
                         <option value="admit">Admit Card</option>
                         <option value="pan">PAN Card</option>
-                        <option value="pan">Result</option>
+                        <option value="result">Result</option>
                         <option value="other">Other</option>
                     </select>
 
@@ -254,7 +255,7 @@ const UploadSection = () => {
 
                     {newHash && (
                         <div className="mt-6 p-4 bg-gray-700 bg-opacity-40 rounded-lg flex justify-center">
-                            <a href={`https://ipfs.io/ipfs/${newHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Link to IPFS</a>
+                            <a href={` https://gateway.pinata.cloud/ipfs/${newHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Link to IPFS</a>
                         </div>
                     )}
                 </div>

@@ -2,81 +2,85 @@ import { NavLink } from 'react-router-dom';
 import '../../dashboardStyles.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // Ensure axios is installed
-import samplehash from '../../../../assets/images/sampleImages/samplehash.jpeg'; // Import your sample image
+import axios from 'axios';
+import samplehash from '../../../../assets/images/sampleImages/samplehash.jpeg';
 
 function Wallet() {
     const { user } = useAuth0();
-    const [images, setImages] = useState([]);
-
-    // Fetch IPFS hashes from MongoDB based on user ID
-    const fetchImagesFromMongoDB = async () => {
-        try {
-            const response = await axios.get('/api/images', {
-                params: { userId: user.sub } // Pass the user ID as a query parameter
-            });
-            console.log('Response data:', response.data); // Log the response
-            setImages(response.data); // Ensure this is an array
-        } catch (error) {
-            console.error('Error fetching images from MongoDB:', error);
-        }
-    };
-
-    // Fetch images when component mounts
+    const [documents, setDocuments] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    
+    // Fetch documents when user ID changes
     useEffect(() => {
-        fetchImagesFromMongoDB();
-    }, [user.sub]); // Ensure to refetch if user ID changes
+        const fetchDocuments = async () => {
+            if (!user?.sub) {
+                setError('User ID is not available.');
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const response = await axios.get(`http://127.0.0.1:5000/c/${user.sub}`);
+                console.log("Response Data:", response.data);
+                setDocuments(response.data);
+            } catch (err) {
+                console.error("Error fetching documents:", err);
+                setError('Failed to fetch documents: ' + err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchDocuments();
+    }, [user?.sub]);
 
     return (
-        <div className="flex flex-col items-center justify-center w-full min-h-screen animated-gradient p-6 font-albulaMedium">
-            <h1 className="text-3xl font-bold text-white mb-4">Wallet</h1>
-
-            {/* User Info */}
-            <div className="mb-6 text-center">
-                <h2 className="text-xl text-white">Welcome, {user.name}!</h2>
-                <p className="text-gray-300">{user.email}</p>
+        <div className="flex flex-col items-center justify-start w-full min-h-screen animated-gradient font-albulaMedium">
+            {/* Navbar */}
+            <div id='walletNavbar' className='bg-slate-900 w-full h-[100px] flex flex-row justify-between items-center font-albulaRegular text-gray-800 p-10'>
+                <span className='text-3xl font-albulaBold text-white'>Welcome {user.given_name} {user.family_name}</span>
+                <NavLink to="/dashboard/profile" id='md_imgHolder'>
+                    <img src={user.picture} alt="User Icon" className='md_userIcon rounded-full h-[70%] w-[70%]'/>
+                </NavLink>
             </div>
 
-            {/* Image Cards Section */}
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-5xl">
-                {/* Demo Card with Sample Image */}
-                <div className="bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-lg p-4 flex flex-col items-center">
-                    <img
-                        src={samplehash} // Use the imported sample hash image
-                        alt="Demo Image"
-                        className="w-full h-32 object-cover rounded-lg mb-2"
-                    />
-                    <a
-                        href={samplehash} // Link to the sample hash image
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-400 hover:underline"
-                    >
-                        Sample Hash Image
-                    </a>
-                </div>
+            {/* Glassmorphism Container */}
+            <div className="bg-white bg-opacity-10 backdrop-blur-lg border border-white border-opacity-20 rounded-2xl p-8 mt-10 shadow-lg w-full max-w-5xl">
+                <h2 className="text-2xl font-semibold text-white mb-6 text-center">Your Documents</h2>
 
-                {Array.isArray(images) && images.length > 0 ? (
-                    images.map((image, index) => (
-                        <div key={index} className="bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-lg p-4 flex flex-col items-center">
-                            <img
-                                src={`https://ipfs.io/ipfs/${image.ipfsHash}`}
-                                alt={`Uploaded Image ${index + 1}`}
-                                className="w-full h-32 object-cover rounded-lg mb-2"
-                            />
-                            <a
-                                href={`https://ipfs.io/ipfs/${image.ipfsHash}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-400 hover:underline"
-                            >
-                                {image.ipfsHash}
-                            </a>
-                        </div>
-                    ))
-                ) : (
-                    <p className="text-gray-300">.</p>
-                )}
+                {/* Loading and Error Handling */}
+                {loading && <p className="text-gray-300 text-center">Loading...</p>}
+                {error && <p className="text-red-500 text-center">{error}</p>}
+
+                {/* Document Cards Section */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {/* Render documents from MongoDB */}
+                    {Array.isArray(documents) && documents.length > 0 ? (
+                        documents.map((document, index) => (
+                            <div key={index} className="bg-white bg-opacity-20 backdrop-blur-md border border-white border-opacity-20 rounded-lg p-4 flex flex-col items-center transition duration-300 hover:shadow-2xl">
+                                <img
+                                    src={`https://gateway.pinata.cloud/ipfs/${document.ipfs_hash}`} // Ensure you're using the correct property
+                                    alt={`Uploaded Document ${index + 1}`}
+                                    className="w-full h-40 object-cover rounded-lg mb-4"
+                                />
+                                <div className="text-center">
+                                    <p className="text-lg text-white font-semibold mb-2">Document #{index + 1}</p>
+                                    <a
+                                        href={`https://gateway.pinata.cloud/ipfs/${document.ipfs_hash}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-400 hover:underline text-sm"
+                                    >
+                                        Link to the Document
+                                    </a>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-gray-300 text-center">No documents found.</p>
+                    )}
+                </div>
             </div>
 
             {/* Navigation Links */}
