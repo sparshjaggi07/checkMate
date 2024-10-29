@@ -9,25 +9,19 @@ import animationData from '../../../../assets/animations/enlargingCircle_Loader.
 import tickAnimation from '../../../../assets/animations/tickAnimation.json';
 import errorAnimation from '../../../../assets/animations/Error_Animation.json';
 import '../../dashboardStyles.css';
-import { useNavigate } from 'react-router-dom';
 
 const UploadSection = () => {
     const [file, setFile] = useState(null);
     const [docType, setDocType] = useState('');
     const [loading, setLoading] = useState(false);
     const [ipfsHash, setIpfsHash] = useState(null);
-    const [documents, setDocuments] = useState([]);
     const [verifyStatus, setVerifyStatus] = useState(false);
-    const navigate=useNavigate();
 
     const [newHash, setNewHash] = useState(null);
     const [error, setError] = useState(false);
 
 
     const { user } = useAuth0();
-    const userID = user.sub;
-
-    let verifiedHash;
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
@@ -39,6 +33,7 @@ const UploadSection = () => {
         setIpfsHash(null);
         setVerifyStatus(false);
         setError(false);
+        setNewHash(null);
     };
 
     const handleTypeChange = (e) => {
@@ -53,6 +48,9 @@ const UploadSection = () => {
         }
     };
 
+    const PINATA_API_KEY = import.meta.env.VITE_PINATA_API_KEY;
+    const PINATA_SECRET_API_KEY = import.meta.env.VITE_PINATA_SECRET_KEY;
+
     const handleStoreDocument = async () => {
         setLoading(true);
         try {
@@ -61,8 +59,8 @@ const UploadSection = () => {
         
             const url = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
             const headers = {
-                pinata_api_key: '04b26ee360171f03ae2b',
-                pinata_secret_api_key: '250fe3ce90862d18f94ced6c065a6bec5a956d528aef8ab9d737a9b3f0ca8065',
+                pinata_api_key: PINATA_API_KEY,
+                pinata_secret_api_key: PINATA_SECRET_API_KEY,
                 "Content-Type": "multipart/form-data",
             };
         
@@ -95,7 +93,7 @@ const UploadSection = () => {
         console.log(docType);
 
         if(backendResponseData["predicted_document_type"] == docType){
-            console.log("classification completed");
+            console.log("Classification of Document Completed");
 
             // Call to the second backend route if classification is successful
             const secondConfig = {
@@ -113,7 +111,7 @@ const UploadSection = () => {
             console.log(JSON.stringify(secondResponseData));
 
             if(secondResponseData["Match Result"]==1){
-                console.log("dataset matched");
+                console.log("Data Set Matched Successfully");
 
                 // Additional request if dataset matched
                 let additionalData = JSON.stringify({
@@ -140,13 +138,13 @@ const UploadSection = () => {
                 setVerifyStatus(true);
                 playChimeSound();
             } else {
-                console.log("datasetmatchingfailed");
+                console.log("Data Set Matching Failed!");
                 setError(true);
                 playErrorSound();
             }
 
         } else {
-            console.log("classificationfailed");
+            console.log("Classification of Document Failed!");
             setError(true);
             playErrorSound();
         }
@@ -251,7 +249,7 @@ const UploadSection = () => {
                         </div>
                     ) : null}
 
-                    {error && alert("Document is flagged!")}
+                    {error}
 
                     {newHash && (
                         <div className="mt-6 p-4 bg-gray-700 bg-opacity-40 rounded-lg flex justify-center">

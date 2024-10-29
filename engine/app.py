@@ -16,13 +16,18 @@ from fuzzywuzzy import fuzz
 import cv2
 import numpy as np
 import json
+import os
+from dotenv import load_dotenv
 
 # Initialize the Flask app and enable CORS
 app = Flask(__name__)
 CORS(app)
 
+# Load .env
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'))
+
 # MongoDB Configuration
-app.config["MONGO_URI"] = "mongodb+srv://amanwhoooo:VuKVdMuGEHjQRmOG@cluster0.vygshnz.mongodb.net/check"  # Update with your MongoDB URI
+app.config["MONGO_URI"] = os.getenv("MONGO_URI")  # Load URI from .env
 mongo = PyMongo(app)
 
 # Load sample database from JSON file
@@ -45,8 +50,6 @@ model = model.to(device)
 model.eval()  # Set model to evaluation mode
 
 # Constants for signature overlaying
-PINATA_API_KEY = '04b26ee360171f03ae2b'
-PINATA_SECRET_API_KEY = '250fe3ce90862d18f94ced6c065a6bec5a956d528aef8ab9d737a9b3f0ca8065'
 SIGNATURE_POSITION = [300, 500]
 SIGNATURE_SIZE = (200, 200)  # Desired size for the signature (width, height)
 
@@ -94,6 +97,8 @@ def overlay_signature(background_image, signature_path, position):
         raise Exception("Failed to encode image")
 
     return buffer.tobytes()
+PINATA_API_KEY = os.getenv("PINATA_API_KEY")
+PINATA_SECRET_API_KEY = os.getenv("PINATA_SECRET_KEY")
 
 # Function to upload an image to IPFS
 def upload_to_ipfs(image_data):
@@ -226,7 +231,7 @@ def classify_ipfs(auth_id):  # Added auth_id as a parameter to the function
                     "verify_flag": False  # Set verify_flag to False
                 }
 
-                mongo.db.your_collection_name.insert_one(document)  # Replace with your actual collection name
+                mongo.db.userDocuments.insert_one(document)  # Replace with your actual collection name
             
             return jsonify({"predicted_document_type": predicted_class}), 200
         
@@ -236,7 +241,7 @@ def classify_ipfs(auth_id):  # Added auth_id as a parameter to the function
     elif request.method == 'GET':
         # Handle the GET request
         try:
-            documents = list(mongo.db.your_collection_name.find({"authid": auth_id}))  # Replace with your actual collection name
+            documents = list(mongo.db.userDocuments.find({"authid": auth_id}))  # Replace with your actual collection name
             
             # Convert ObjectId to string if needed
             for doc in documents:
@@ -268,7 +273,7 @@ def overlay_signature_endpoint():
        # Upload the final image to IPFS.
        ipfs_hash=upload_to_ipfs(image_data)
 
-       result = mongo.db.your_collection_name.update_one(
+       result = mongo.db.userDocuments.update_one(
             {"ipfs_hash": background_ipfs_link},
             {"$set": {"ipfs_hash": ipfs_hash, "verify_flag": True}}
         )
