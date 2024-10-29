@@ -23,4 +23,7 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.sw*
+
+# Ignore Python virtual environments
+engine/.venv/
