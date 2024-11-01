@@ -136,8 +136,8 @@ function Home() {
                 {/* Team Section */}
 
                 <section id="team" className="w-full h-auto flex flex-col justify-center items-center px-52 py-96">
-                    <h1 className="font-albulaExtraLight tracking-widest uppercase text-gray-500 text-sm">
-                        Website Developed by <span className="text-[#6536ff] font-albulaBold">Team Binary Bots</span> for CodeUtsava 8.0, Crafted with Love
+                    <h1 className="font-albulaLight tracking-widest uppercase text-gray-500 text-sm">
+                        Website Developed by <span className="text-[#6536ff] font-albulaBold">Team Binary Bots</span> for CodeUtsava 8.0, Crafted with Love ❤️
                     </h1>
 
                     <h1 className="font-gilroyEB text-5xl mt-6 text-gray-800">Meet the team</h1>
@@ -148,9 +148,9 @@ function Home() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-32 mt-64 px-5 w-full max-w-5xl">
                         {teamMembers.map((member, index) => (
                             <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg relative group">
+
                                 <div className="relative w-full h-[400px] overflow-hidden">
                                     <img src={member.img} alt={member.name} className="w-full h-full object-cover object-center transition-transform duration-500 ease-in-out transform hover:scale-105 hover:shadow-xl" />
-                                    
                                     <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                         <div className="flex space-x-10">
                                             <a href={member.socialLinks[1].url} target="_blank" rel="noopener noreferrer" className="text-white text-2xl hover:text-gray-300">

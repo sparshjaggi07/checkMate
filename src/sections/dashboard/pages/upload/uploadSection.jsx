@@ -10,7 +10,7 @@ import tickAnimation from '../../../../assets/animations/tickAnimation.json';
 import errorAnimation from '../../../../assets/animations/Error_Animation.json';
 import '../../dashboardStyles.css';
 
-const UploadSection = () => {
+const UploadSection = ({ closePopup }) => {
     const [file, setFile] = useState(null);
     const [docType, setDocType] = useState('');
     const [loading, setLoading] = useState(false);
@@ -152,7 +152,6 @@ const UploadSection = () => {
         
         } catch (error) {
             console.error("Error uploading document to Pinata:", error.response ? error.response.data : error.message);
-            alert('Failed to store document in IPFS.');
         } finally {
             setLoading(false);
         }
@@ -179,8 +178,8 @@ const UploadSection = () => {
     
     return (
         <>
-            <div className="flex flex-col items-center justify-center w-full min-h-screen animated-gradient">
-                <div className="w-[600px] bg-gray-800 bg-opacity-40 backdrop-blur-md shadow-lg rounded-lg glass-card p-12">
+            <div className="flex flex-col items-center justify-center w-full min-h-screen">
+                <div className="w-[600px] bg-gray-950 bg-opacity-90 backdrop-blur-md shadow-lg rounded-lg glass-card p-12">
                     <h1 className="text-3xl font-bold text-white mb-6 text-center font-albulaMedium">Document Upload</h1>
 
                     <div className="border-2 border-dashed border-gray-500 rounded-lg p-6 bg-gray-700 bg-opacity-30 mb-6">
@@ -221,6 +220,7 @@ const UploadSection = () => {
                         Next
                     </button>
 
+
                     {loading ? (
                         <div className="mt-6 flex justify-center">
                             <Lottie options={defaultOptions} height={150} width={150} />
@@ -251,11 +251,16 @@ const UploadSection = () => {
 
                     {error}
 
+                                
                     {newHash && (
                         <div className="mt-6 p-4 bg-gray-700 bg-opacity-40 rounded-lg flex justify-center">
                             <a href={`https://gateway.pinata.cloud/ipfs/${newHash}`} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Link to IPFS</a>
                         </div>
                     )}
+                    
+                    <div className='flex flex-row justify-center items-center'>
+                        <button onClick={closePopup} className="mt-4 inline-flex items-center justify-center px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">Close</button>
+                    </div>
                 </div>
             </div>
         </>

@@ -38,7 +38,7 @@ function Profile() {
 
     return (
         isAuthenticated && (
-            <div className="flex items-center justify-center w-full min-h-screen animated-gradient p-6 font-albulaMedium">
+            <div className="flex items-center justify-center w-full min-h-screen p-6 font-albulaMedium bg-slate-950">
                 <div className="w-full max-w-5xl flex flex-col md:flex-row gap-6">
                     
                     {/* Profile Card */}

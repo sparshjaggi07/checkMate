@@ -3,7 +3,6 @@ import '../../dashboardStyles.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import samplehash from '../../../../assets/images/sampleImages/samplehash.jpeg';
 
 function Wallet() {
     const { user } = useAuth0();
@@ -11,7 +10,6 @@ function Wallet() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
-    // Fetch documents when user ID changes
     useEffect(() => {
         const fetchDocuments = async () => {
             if (!user?.sub) {
@@ -36,7 +34,7 @@ function Wallet() {
     }, [user?.sub]);
 
     return (
-        <div className="flex flex-col items-center justify-start w-full min-h-screen animated-gradient font-albulaMedium">
+        <div className="flex flex-col items-center justify-start w-full min-h-screen font-albulaMedium bg-slate-950">
             {/* Navbar */}
             <div id='walletNavbar' className='bg-slate-900 w-full h-[100px] flex flex-row justify-between items-center font-albulaRegular text-gray-800 p-10'>
                 <span className='text-3xl font-albulaBold text-white'>Welcome {user.given_name} {user.family_name}</span>

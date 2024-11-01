@@ -30,10 +30,9 @@ function ConnectSection() {
 
   return (
     isAuthenticated && (
-      <div className="flex items-center justify-center w-full min-h-screen animated-gradient p-6 font-albulaMedium">
-        <div className="w-full max-w-md flex flex-col gap-6"> {/* Reduced width to max-w-md */}
+      <div className="flex items-center justify-center w-full min-h-screen p-6 font-albulaMedium bg-slate-950">
+        <div className="w-full max-w-md flex flex-col gap-6">
           
-          {/* Glassmorphism Form Section */}
           <div className="w-full bg-white bg-opacity-10 backdrop-blur-md border border-white border-opacity-20 rounded-2xl shadow-lg p-6 flex flex-col">
             <h2 className="text-2xl font-semibold text-white mb-4 text-center">Connect With Us</h2>
             {success && <p className="text-green-500 text-center">Email sent successfully!</p>}
