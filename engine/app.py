@@ -27,7 +27,7 @@ CORS(app)
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'))
 
 # MongoDB Configuration
-app.config["MONGO_URI"] = os.getenv("MONGO_URI")  # Load URI from .env
+app.config["MONGO_URI"] = os.getenv("MONGO_URI")
 mongo = PyMongo(app)
 
 # Load sample database from JSON file
@@ -97,15 +97,13 @@ def overlay_signature(background_image, signature_path, position):
         raise Exception("Failed to encode image")
 
     return buffer.tobytes()
-PINATA_API_KEY = os.getenv("PINATA_API_KEY")
-PINATA_SECRET_API_KEY = os.getenv("PINATA_SECRET_KEY")
 
 # Function to upload an image to IPFS
 def upload_to_ipfs(image_data):
     url = "https://api.pinata.cloud/pinning/pinFileToIPFS"
     headers = {
-        "pinata_api_key": PINATA_API_KEY,
-        "pinata_secret_api_key": PINATA_SECRET_API_KEY
+        "pinata_api_key": '04b26ee360171f03ae2b',
+        "pinata_secret_api_key": '250fe3ce90862d18f94ced6c065a6bec5a956d528aef8ab9d737a9b3f0ca8065'
     }
     files = {
         'file': ('image.jpg', io.BytesIO(image_data), 'image/jpeg')
