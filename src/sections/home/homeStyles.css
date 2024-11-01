@@ -47,28 +47,6 @@
     animation: arrowd 1s infinite linear;
 }
 
-.dark-gradient-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(135deg, 
-        #2c003e,
-        #012a31,  
-        #2e054b,  
-        #000d2b,  
-        #082845,
-        #260138,
-        #1a0d29,
-        #290243
-    );
-    z-index: -1;
-    background-size: 500% 500%;
-    animation: gradientAnimation 15s ease infinite;
-}
-
-
 @keyframes gradientAnimation {
     0% {
         background-position: 0% 50%;
@@ -85,6 +63,27 @@
     100% {
         background-position: 0% 50%;
     }
+}
+
+.gradient-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, 
+        #16001e,
+        #002025,  
+        #200435,  
+        #000d2b,  
+        #061e35,
+        #180024,
+        #1a0d29,
+        #190129
+    );
+    z-index: -1;
+    background-size: 600% 600%;
+    animation: gradientAnimation 15s ease infinite;
 }
 
 .styled-button {

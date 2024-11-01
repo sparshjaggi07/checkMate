@@ -1,34 +1,20 @@
-:root {
-    --night: #0F0D13ff;
-    --chrysler-blue: rgb(21, 3, 54);
-    --night-2: #0D0B13ff;
-    --gray: rgb(0, 7, 44);
-
-
-    --pear: #DFF25Cff;
-    --beaver: #B1856Aff;
-    --moss-green: #81864Bff;
-    --platinum: #E0E0DCff;
-    --black-olive: #4B4C44ff;
-}
-
 .dark-gradient-background {
-    position: fixed;
+    position: absolute;
+    z-index: -10;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     background: linear-gradient(135deg, 
-        #2c003e,
+        #16001e,
         #002025,  
         #200435,  
         #000d2b,  
         #061e35,
-        #260138,
+        #180024,
         #1a0d29,
-        #290243
+        #190129
     );
-    z-index: -1;
     background-size: 600% 600%;
     animation: gradientAnimation 15s ease infinite;
 }
@@ -44,21 +30,4 @@
 
 .glassmorphism-card:hover {
     transform: scale(1.05);
-}
-
-
-.animated-gradient {
-    background: linear-gradient(45deg, var(--night), var(--chrysler-blue), var(--night-2));
-    background-size: 200% 200%;
-    animation: gradientMovement 10s ease infinite;
-}
-
-@keyframes gradientMovement {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-.animated-background {
-    animation: subtleGreenGradient 10s ease-in-out infinite;
 }

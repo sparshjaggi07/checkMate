@@ -15,6 +15,10 @@ export default {
 				'albulaBold': ['"albulaBold"', 'bold'],
 				'albulaHeavy': ['"albulaHeavy"', 'heavy'],
 				'albulaExtraBold': ['"albulaExtraBold"', 'extraBold'],
+				'noirProLight': ['"noirProLight"', 'light'],
+				'noirProRedular': ['"noirProRegular"', 'regular'],
+				'noirProBold': ['"noirProBold"', 'bold'],
+				'noirProHeavy': ['"noirProHeavy"', 'heavy'],
 		  	},
 			backdropBlur: {
                 md: '12px',

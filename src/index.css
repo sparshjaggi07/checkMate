@@ -44,3 +44,50 @@
     font-family: albulaExtraBold;
     src: url(./assets/fonts/albula/albulaExtraBold.ttf);
 }
+
+@font-face {
+    font-family: noirProLight;
+    src: url(./assets/fonts/noirPro/NoirPro-Light.otf);
+}
+
+@font-face {
+    font-family: noirProRegular;
+    src: url(./assets/fonts/noirPro/NoirPro-Regular.otf);
+}
+
+@font-face {
+    font-family: noirProMedium;
+    src: url(./assets/fonts/noirPro/NoirPro-Medium.otf);
+}
+
+@font-face {
+    font-family: noirProBold;
+    src: url(./assets/fonts/noirPro/NoirPro-Bold.otf);
+}
+
+@font-face {
+    font-family: noirProHeavy;
+    src: url(./assets/fonts/noirPro/NoirPro-Heavy.otf);
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #6536ff transparent;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+    height: 0;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #6536ff;
+    border-radius: 10px;
+}

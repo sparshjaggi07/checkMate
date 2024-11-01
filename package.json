@@ -4,6 +4,8 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
+		"frontend": "vite",
+		"backend": "cd engine && python app.py",
 		"dev": "concurrently \"vite\" \"cd engine && python app.py\"",
 		"build": "vite build",
 		"lint": "eslint .",
@@ -20,6 +22,7 @@
 		"ethers": "^6.13.4",
 		"express": "^4.21.1",
 		"ipfs-http-client": "^60.0.1",
+		"lottie-react": "^2.4.0",
 		"mongoose": "^8.7.3",
 		"pinata": "^1.7.2",
 		"react": "^18.3.1",
