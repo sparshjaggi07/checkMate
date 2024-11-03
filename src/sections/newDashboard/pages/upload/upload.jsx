@@ -227,7 +227,7 @@ function Profile() {
                             <div className="flex items-start">
                                 <span className="bg-violet-100 text-violet-600 p-2 rounded-full font-bold mr-3">2</span>
                                 <p>
-                                    <strong className="text-violet-600">File Preprocessing and Initial Validation:</strong> KeyVault checks the 
+                                    <strong className="text-violet-600">File Preprocessing and Initial Validation:</strong> Check Mate checks the 
                                     <span className="text-violet-600 font-semibold">file format</span> and <span className="text-violet-600 font-semibold">size</span> 
                                     to ensure compatibility. This step reduces errors and ensures the document meets platform requirements.
                                 </p>
@@ -247,7 +247,7 @@ function Profile() {
                             <div className="flex items-start">
                                 <span className="bg-violet-100 text-violet-600 p-2 rounded-full font-bold mr-3">4</span>
                                 <p>
-                                    <strong className="text-violet-600">Storing Metadata in KeyVault’s Database:</strong> KeyVault saves the 
+                                    <strong className="text-violet-600">Storing Metadata in Check Mate’s Database:</strong> Check Mate saves the 
                                     <span className="text-violet-600 font-semibold">IPFS hash</span>, document type, and upload date. This enables 
                                     easy retrieval and efficient document management.
                                 </p>
@@ -264,7 +264,7 @@ function Profile() {
                         </div>
 
                         <p className="text-sm text-gray-700">
-                            This process ensures that each document uploaded to KeyVault is stored in a <span className="text-violet-600 font-semibold">secure</span>, 
+                            This process ensures that each document uploaded to Check Mate is stored in a <span className="text-violet-600 font-semibold">secure</span>, 
                             <span className="text-violet-600 font-semibold">decentralized</span> manner and is easily accessible, upholding high standards 
                             for <span className="text-violet-600 font-semibold">data security</span> and <span className="text-violet-600 font-semibold">user experience</span>.
                         </p>

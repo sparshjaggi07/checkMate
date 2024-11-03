@@ -24,27 +24,14 @@ function Profile() {
 
     return (
         isAuthenticated && (
-            <main className="fixed w-[calc(100vw-450px)] h-screen bg-[#0F0D13ff] rounded-tl-[40px] rounded-bl-[40px] p-7 font-albulaRegular">
+            <main className="fixed w-[calc(100vw-450px)] h-screen bg-[#0F0D13ff] rounded-tl-[40px] rounded-bl-[40px] pt-7 pb-7 pr-7 font-albulaRegular">
                 <div className="flex flex-row bg-white text-gray-900 rounded-[40px] h-full border-gray-400 shadow-lg">
-                    {/* Left Section - Profile Info */}
-                    <div className="flex flex-col items-center justify-between w-1/3 bg-gradient-to-b from-blue-100 to-indigo-200 rounded-l-[40px] py-36 shadow-inner">
+                    <div className="flex flex-col items-center justify-center w-1/3 bg-gradient-to-b from-blue-100 to-indigo-200 rounded-l-[40px] py-36 shadow-inner">
                         <div className="flex flex-col justify-center items-center">
                             <img src={user.picture} alt="User Profile" className="w-40 h-40 rounded-full mb-6 border-4 border-blue-300 shadow-lg transform transition-transform duration-200 hover:scale-105"/>
                             <h2 className="text-3xl font-bold text-gray-800 mt-10">{user.name}</h2>
                             <p className="text-gray-600 mb-2 font-medium mt-5">{user.email}</p>
                             <p className="text-sm text-gray-500 mb-6">{user.sub}</p>
-                        </div>
-
-                        <div className="w-full text-center space-y-3 font-medium mt-4">
-                            <div className="flex items-center justify-center text-orange-600">
-                                <p>Document Uploads: <span className="font-semibold">4</span></p>
-                            </div>
-                            <div className="flex items-center justify-center text-green-600">
-                                <p>Document Verified: <span className="font-semibold">3</span></p>
-                            </div>
-                            <div className="flex items-center justify-center text-red-600">
-                                <p>Document Unverified: <span className="font-semibold">1</span></p>
-                            </div>
                         </div>
                     </div>
 
