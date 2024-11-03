@@ -18,9 +18,7 @@ function AnalysisSection() {
 
     const verifiedCount = documents.filter(doc => doc.verify_flag).length;
     const unverifiedCount = documents.length - verifiedCount;
-    const verificationRatio = unverifiedCount + verifiedCount > 0 
-        ? (verifiedCount / (verifiedCount + unverifiedCount) * 100).toFixed(2) 
-        : 0;
+    const verificationRatio = unverifiedCount + verifiedCount > 0  ? (verifiedCount / (verifiedCount + unverifiedCount) * 100).toFixed(2) : 0;
 
     useEffect(() => {
         const fetchDocuments = async () => {

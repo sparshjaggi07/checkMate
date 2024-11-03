@@ -2,12 +2,12 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'r
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Home from './sections/home/home';
-import DashboardLayout from './sections/dashboard/dashboardLayout';
-import Wallet from './sections/dashboard/pages/wallet/walletSection';
-import Profile from './sections/dashboard/pages/profile/profileSection';
-import AnalysisSection from './sections/dashboard/pages/analysis/analysisSection';
-import ConnectSection from './sections/dashboard/pages/connect/connectSection';
-import UploadSection from './sections/dashboard/pages/upload/uploadSection';
+import DashboardLayout from './sections/newDashboard/dashboardLayout';
+import Wallet from './sections/newDashboard/pages/wallet/wallet';
+import Profile from './sections/newDashboard/pages/profile/profile';
+import Analysis from './sections/newDashboard/pages/analysis/analysis';
+import Connect from './sections/newDashboard/pages/connect/connect';
+import Upload from './sections/newDashboard/pages/upload/upload';
 import Header from './components/navigation/header/header';
 import Footer from './components/navigation/footer/footer';
 
@@ -39,14 +39,11 @@ function WebRoutes() {
                     <Route path="/dashboard" element={<DashboardLayout />}>
                         <Route path="wallet" element={<Wallet />} />
                         <Route path="profile" element={<Profile />} />
-                        <Route path="analysis" element={<AnalysisSection />} />
-                        <Route path="connect" element={<ConnectSection />} />
-                        <Route path="upload" element={<UploadSection />} />
-                        <Route path="" element={<Navigate to="/" />} />
+                        <Route path="analysis" element={<Analysis />} />
+                        <Route path="connect" element={<Connect />} />
+                        <Route path="upload" element={<Upload />} />
                     </Route>
-                ) : (
-                    <Route path="*" element={<Navigate to="/" />} />
-                )}
+                ) : null}
             </Routes>
             
             <ConditionalFooter />
