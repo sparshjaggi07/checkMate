@@ -227,25 +227,11 @@ const UploadSection = ({ closePopup }) => {
                         </div>
                     ) : error ? (
                         <div className="mt-6 flex justify-center">
-                            <Lottie options={{
-                                loop: false,
-                                autoplay: true,
-                                animationData: errorAnimation,
-                                rendererSettings: {
-                                    preserveAspectRatio: 'xMidYMid slice'
-                                }
-                            }} height={150} width={150} />
+                            <Lottie options={{ loop: false, autoplay: true, animationData: errorAnimation, rendererSettings: { preserveAspectRatio: 'xMidYMid slice' } }} height={150} width={150} />
                         </div>
                     ) : verifyStatus ? (
                         <div className="mt-6 flex justify-center">
-                            <Lottie options={{
-                                loop: false,
-                                autoplay: true,
-                                animationData: tickAnimation,
-                                rendererSettings: {
-                                    preserveAspectRatio: 'xMidYMid slice'
-                                }
-                            }} height={150} width={150} />
+                            <Lottie options={{ loop: false, autoplay: true, animationData: tickAnimation, rendererSettings: { preserveAspectRatio: 'xMidYMid slice' } }} height={150} width={150} />
                         </div>
                     ) : null}
 

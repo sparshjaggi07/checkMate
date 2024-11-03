@@ -8,6 +8,7 @@ import AlertIcon from '../../../../assets/icons/alert.png';
 import WarningIcon from '../../../../assets/icons/WarningIcon.png';
 import VerifiedDocumentIcon from '../../../../assets/icons/VerifiedDocument.png';
 import UploadIcon from '../../../../assets/animations/upload.json';
+import LeafIllustration from '../../../../assets/images/illustration/LeafIllustration.png'
 
 
 function Analysis() {
@@ -60,12 +61,18 @@ function Analysis() {
                         <h1 className="font-albulaHeavy text-4xl text-slate-800">Dashboard</h1>
                         <p className="text-slate-500 mt-3 ml-1 font-albulaMedium">{today}</p>
 
+                        <p className="text-md text-gray-600 font-albulaRegular mt-8">
+                            Welcome to <span className="text-violet-600">KeyVault</span>! Securely manage, upload, and access all your important documents in one place. 
+                            With <span className="text-violet-600">decentralized storage</span> and <span className="text-violet-600">advanced security</span> features, 
+                            your data is always protected and readily available at your fingertips.
+                        </p>
+
                         {loading ? (
                             <p>Loading documents...</p>
                         ) : error ? (
                             <p className="text-red-500">{error}</p>
                         ) : (
-                            <div className="mt-20">
+                            <div className="mt-10">
                                 <div>
                                     <h1 className='font-albulaHeavy text-2xl text-slate-700'>Document Logs</h1>
                                 </div>
