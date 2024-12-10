@@ -100,11 +100,6 @@ After successfully running the application, navigate to `http://localhost:5173` 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contributors
-- **Aman Kumar** - [GitHub](https://github.com/trulyaman25)
-- **Ansh Shrivastav** - [GitHub](https://github.com/ansh-d23)
-- **Sparsh Jaggi** - [GitHub](https://github.com/sparshjaggi07)
-- **Aayush Gupta** - [GitHub](https://github.com/aayush2761)
 
 ## Images
 
