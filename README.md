@@ -12,6 +12,7 @@
 - [License](#license)
 - [Contributors](#contributors)
 
+
 ## Project Overview
 *checkMate* is a document verification solution designed to automate the process of verifying documents such as academic results, admission cards, and college ID cards. By utilizing machine learning and blockchain technology, *checkMate* ensures secure, tamper-proof storage of verified documents, making the verification process faster and more efficient for users.
 
@@ -104,3 +105,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Ansh Shrivastav** - [GitHub](https://github.com/ansh-d23)
 - **Sparsh Jaggi** - [GitHub](https://github.com/sparshjaggi07)
 - **Aayush Gupta** - [GitHub](https://github.com/aayush2761)
+
+## Images
+
+  ![image](./src/assets/readme/1.png)
+  ![image](./src/assets/readme/2.png)
+  ![image](./src/assets/readme/3.png)
+  ![image](./src/assets/readme/4.png)
+  ![image](./src/assets/readme/5.png)
+  ![image](./src/assets/readme/6.png)
+
+---
